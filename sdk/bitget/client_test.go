@@ -16,7 +16,10 @@ type ClientSuite struct {
 
 func (s *ClientSuite) SetupTest() {
 	apiKey := os.Getenv("BITGET_API_KEY")
+	//apiKey := ""
+
 	apiSecret := os.Getenv("BITGET_API_SECRET")
+	//apiSecret := ""
 
 	s.Require().NotEmpty(apiKey, "BITGET_API_KEY environment variable is required")
 	s.Require().NotEmpty(apiSecret, "BITGET_API_SECRET environment variable is required")
@@ -24,12 +27,12 @@ func (s *ClientSuite) SetupTest() {
 	s.client = NewClient(apiKey, apiSecret, 5*time.Second)
 }
 
-// func (s *ClientSuite) TestKline() {
-// 	ctx := context.Background()
-// 	klines, err := s.client.Kline(ctx, "sol", "73UdJevxaNKXARgkvPHQGKuv8HCZARszuKW2LTL3pump", "1h", 10)
-// 	s.NoError(err)
-// 	s.NotNil(klines)
-// }
+func (s *ClientSuite) TestKline() {
+	ctx := context.Background()
+	klines, err := s.client.Kline(ctx, "sol", "CFbEmC3JJ5HqXwfFNrKMzhAnFaMp64QkbBegcTw3Hpzh", "1m", 10)
+	s.NoError(err)
+	s.NotNil(klines)
+}
 
 // func (s *ClientSuite) TestCoinSecurityAudits() {
 // 	ctx := context.Background()
@@ -49,13 +52,13 @@ func (s *ClientSuite) SetupTest() {
 // 	s.NotNil(audits)
 // }
 
-func (s *ClientSuite) TestCoin() {
-	ctx := context.Background()
-	coins, err := s.client.Coin(ctx, "sol", "73UdJevxaNKXARgkvPHQGKuv8HCZARszuKW2LTL3pump")
-	s.NoError(err)
-	s.NotNil(coins)
+// func (s *ClientSuite) TestCoin() {
+// 	ctx := context.Background()
+// 	coins, err := s.client.Coin(ctx, "sol", "73UdJevxaNKXARgkvPHQGKuv8HCZARszuKW2LTL3pump")
+// 	s.NoError(err)
+// 	s.NotNil(coins)
 
-}
+// }
 
 func TestClientSuite(t *testing.T) {
 	suite.Run(t, new(ClientSuite))
